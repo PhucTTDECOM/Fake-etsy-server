@@ -26,6 +26,14 @@ const listingInventoryMock = [
                         scale_name: null,
                         value_ids: [1047160565576],
                         values: ['1.6x2.3 ft(Mat Size)']
+                    },
+                    {
+                        property_id: 514,
+                        property_name: 'Color',
+                        scale_id: null,
+                        scale_name: null,
+                        value_ids: [1047160565576],
+                        values: ['Blue']
                     }
                 ]
             },

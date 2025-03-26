@@ -11,6 +11,7 @@ import { LedgerModule } from './ledger/ledger.module';
 import { ReviewModule } from './review/review.module';
 import { UploadModule } from './upload/upload.module';
 import { PaymentModule } from './payment/payment.module';
+import { TaxonomyModule } from './taxonomy/taxonomy.module';
 
 @Module({
     imports: [
@@ -20,7 +21,7 @@ import { PaymentModule } from './payment/payment.module';
             port: 3306,
             username: 'root',
             password: '1234',
-            database: 'sellerbox_real',
+            database: 'sellerbox_test_2',
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
             logging: true,
             logger: 'advanced-console',
@@ -33,7 +34,8 @@ import { PaymentModule } from './payment/payment.module';
         LedgerModule,
         ReviewModule,
         UploadModule,
-        PaymentModule
+        PaymentModule,
+        TaxonomyModule
     ],
     controllers: [AppController],
     providers: [AppService]
