@@ -46,15 +46,9 @@ export class ReceiptService {
     }
 
     async getReceipts(shopId: string, queryString: ReceiptQuery): Promise<ListResponse> {
-        const shop = await this.shopRepository.findOne({
-            where: { etsyShopId: shopId }
-        });
-        if (!shop) {
-            throw new NotFoundException('Shop not found');
-        }
         let queryBuilder = this.receiptRepository.createQueryBuilder('receipt');
         queryBuilder = queryString.buildQuery(queryBuilder);
-        queryBuilder.andWhere('receipt._etsy_shop_name = :shopName', { shopName: shop.etsyShopName });
+        queryBuilder.andWhere('receipt.etsyShopId = :shopId', { shopId });
         const receipts = await queryBuilder.getMany();
         const receiptIds = receipts.map((receipt) => receipt.receiptId);
         if (receipts.length === 0) {
@@ -74,7 +68,7 @@ export class ReceiptService {
             receiptDto.shipments = allReceiptShipments.filter((shipment) => shipment.receipt_id === receipt.receiptId);
             receiptDtos.push(receiptDto);
         });
-        const totalItems = await this.countReceipts(queryString, shop.etsyShopName);
+        const totalItems = await this.countReceipts(queryString, shopId);
         return {
             count: totalItems,
             results: receiptDtos
@@ -120,7 +114,7 @@ export class ReceiptService {
     private async getVariations(transactionIds: string[]): Promise<EtsyReceiptTransactionVariation[]> {
         const variations = await this.variationRepository.find({
             where: {
-                id: In(transactionIds)
+                etsyTransactionId: In(transactionIds)
             }
         });
         return variations;
@@ -144,10 +138,10 @@ export class ReceiptService {
         return shipments.map((shipment) => new ShipmentDto(shipment));
     }
 
-    async countReceipts(queryString: ReceiptQuery, shopName: string): Promise<number> {
+    async countReceipts(queryString: ReceiptQuery, shopId: string): Promise<number> {
         let queryBuilder = this.receiptRepository.createQueryBuilder('receipt');
         queryBuilder = queryString.buildCountQuery(queryBuilder);
-        queryBuilder.andWhere('receipt._etsy_shop_name = :shopName', { shopName });
+        queryBuilder.andWhere('receipt.etsyShopId = :shopId', { shopId });
         return queryBuilder.getCount();
     }
 }

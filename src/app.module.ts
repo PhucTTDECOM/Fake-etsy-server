@@ -12,6 +12,8 @@ import { ReviewModule } from './review/review.module';
 import { UploadModule } from './upload/upload.module';
 import { PaymentModule } from './payment/payment.module';
 import { TaxonomyModule } from './taxonomy/taxonomy.module';
+import { OauthModule } from './oauth/oauth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
     imports: [
@@ -21,7 +23,7 @@ import { TaxonomyModule } from './taxonomy/taxonomy.module';
             port: 3306,
             username: 'root',
             password: '1234',
-            database: 'sellerbox_test_2',
+            database: 'sellerboxes_migration',
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
             logging: true,
             logger: 'advanced-console',
@@ -35,7 +37,9 @@ import { TaxonomyModule } from './taxonomy/taxonomy.module';
         ReviewModule,
         UploadModule,
         PaymentModule,
-        TaxonomyModule
+        TaxonomyModule,
+        OauthModule,
+        UserModule
     ],
     controllers: [AppController],
     providers: [AppService]

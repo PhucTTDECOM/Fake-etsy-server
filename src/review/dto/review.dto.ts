@@ -16,7 +16,7 @@ export class EtsyReviewDto {
     updated_timestamp: number;
 
     constructor(review: EtsyReview) {
-        this.shop_id = Number(review.shopId);
+        this.shop_id = Number(review.etsyShopId);
         this.listing_id = Number(review.listingId);
         this.transaction_id = Number(review.transactionId);
         this.buyer_user_id = Number(review.buyerUserId);

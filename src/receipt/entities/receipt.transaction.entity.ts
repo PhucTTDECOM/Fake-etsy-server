@@ -1,24 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('tbl_etsy_receipt_transaction_v3')
 export class EtsyReceiptTransaction {
-    @PrimaryGeneratedColumn({ name: 'transaction_id' })
-    id: number;
+    @PrimaryColumn({ name: 'transaction_id', type: 'varchar', length: 45 })
+    transactionId: string;
 
-    @Column({ name: '_app_user_id', type: 'varchar', length: 45 })
-    appUserId: string;
-
-    @Column({ name: '_etsy_user_id', type: 'varchar', length: 45 })
-    etsyUserId: string;
-
-    @Column({ name: '_etsy_shop_name', type: 'varchar', length: 150 })
-    etsyShopName: string;
+    @PrimaryColumn({ name: '_etsy_shop_id', type: 'varchar', length: 45 })
+    etsyShopId: string;
 
     @Column({ name: '_date_crawled', type: 'datetime', nullable: true })
     dateCrawled: Date;
-
-    @Column({ name: 'transaction_id', type: 'varchar', length: 45 })
-    transactionId: string;
 
     @Column({ name: 'title', type: 'varchar', length: 200, nullable: true })
     title: string;

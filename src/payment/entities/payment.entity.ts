@@ -1,23 +1,13 @@
 import { EtsyPaymentAdjustment } from './payment-adjustment.entity';
-import { Entity, Column, PrimaryColumn, Index } from 'typeorm';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('tbl_etsy_payment_v3')
-@Index('IDX_RPT', ['appUserId', 'etsyUserId', 'etsyShopName', 'paymentId', 'shopId', 'receiptId'])
 export class EtsyPayment {
-    @PrimaryColumn({ name: '_app_user_id', type: 'varchar', length: 45 })
-    appUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_user_id', type: 'varchar', length: 45 })
-    etsyUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_shop_name', type: 'varchar', length: 150 })
-    etsyShopName: string;
+    @PrimaryColumn({ name: '_etsy_shop_id', type: 'varchar', length: 45 })
+    etsyShopId: string;
 
     @PrimaryColumn({ name: 'payment_id', type: 'varchar', length: 45 })
     paymentId: string;
-
-    @PrimaryColumn({ name: 'shop_id', type: 'varchar', length: 45 })
-    shopId: string;
 
     @PrimaryColumn({ name: 'receipt_id', type: 'varchar', length: 45 })
     receiptId: string;

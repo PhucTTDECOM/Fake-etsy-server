@@ -2,9 +2,6 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'tbl_etsy_shop_v3' })
 export class Shop {
-    @PrimaryColumn({ type: 'varchar', length: 45, name: '_app_user_id' })
-    appUserId: string;
-
     @PrimaryColumn({ type: 'varchar', length: 45, name: 'etsy_shop_id' })
     etsyShopId: string;
 

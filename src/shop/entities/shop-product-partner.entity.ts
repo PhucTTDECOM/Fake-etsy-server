@@ -2,14 +2,8 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('tbl_etsy_shop_production_partner_v3')
 export class EtsyShopProductionPartner {
-    @PrimaryColumn({ name: '_app_user_id', type: 'varchar', length: 45 })
-    appUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_user_id', type: 'varchar', length: 45 })
-    etsyUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_shop_name', type: 'varchar', length: 150 })
-    etsyShopName: string;
+    @PrimaryColumn({ name: '_etsy_shop_id', type: 'varchar', length: 45 })
+    etsyShopId: string;
 
     @PrimaryColumn({ name: 'production_partner_id', type: 'varchar', length: 45 })
     productionPartnerId: string;

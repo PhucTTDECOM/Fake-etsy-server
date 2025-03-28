@@ -2,14 +2,8 @@ import { Entity, PrimaryColumn, Column } from 'typeorm';
 
 @Entity('tbl_etsy_payment_adjustment_item_v3')
 export class EtsyPaymentAdjustmentItem {
-    @PrimaryColumn({ name: '_app_user_id', type: 'varchar', length: 45 })
-    appUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_user_id', type: 'varchar', length: 45 })
-    etsyUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_shop_name', type: 'varchar', length: 150 })
-    etsyShopName: string;
+    @PrimaryColumn({ name: '_etsy_shop_id', type: 'varchar', length: 45 })
+    etsyShopId: string;
 
     @Column({ name: 'date_crawled', type: 'datetime', nullable: true })
     dateCrawled: Date;

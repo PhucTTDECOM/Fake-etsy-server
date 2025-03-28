@@ -9,7 +9,7 @@ export class EtsyShopRefundDto {
 
     constructor(refund: EtsyShopRefund) {
         this.return_policy_id = Number(refund.returnPolicyId);
-        this.shop_id = Number(refund.shopId);
+        this.shop_id = Number(refund.etsyShopId);
         this.accepts_returns = Boolean(refund.acceptsReturns);
         this.accepts_exchanges = Boolean(refund.acceptsExchanges);
         this.return_deadline = refund.returnDeadline || 0;

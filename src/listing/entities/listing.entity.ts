@@ -2,23 +2,14 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('tbl_etsy_listing_v3')
 export class EtsyListing {
-    @PrimaryColumn({ name: '_app_user_id', type: 'varchar', length: 45 })
-    appUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_user_id', type: 'varchar', length: 45 })
-    etsyUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_shop_name', type: 'varchar', length: 150 })
-    etsyShopName: string;
+    @PrimaryColumn({ name: '_etsy_shop_id', type: 'varchar', length: 45 })
+    etsyShopId: string;
 
     @PrimaryColumn({ name: 'listing_id', type: 'varchar', length: 45 })
     listingId: string;
 
     @Column({ name: '_date_crawled', type: 'datetime', nullable: true })
     dateCrawled: Date;
-
-    @Column({ name: 'shop_id', type: 'varchar', length: 45, nullable: true })
-    shopId: string;
 
     @Column({ name: 'title', type: 'varchar', length: 200, nullable: true })
     title: string;

@@ -1,14 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EtsyLedgerEntry } from './entities/ledger.entity';
 import { In, Repository } from 'typeorm';
 import { EtsyLedgerEntryPaymentAdjustment } from './entities/ledger-payment-adjustment.entity';
 import { EtsyLedgerEntryPaymentAdjustmentItem } from './entities/ledger-payment-adjustment-item.entity';
 import LedgerQuery from 'src/query/ledger.query';
-import { Shop } from 'src/shop/entities/shop.entity';
 import { ListResponse } from 'src/common/api.payload';
 import { EtsyLedgerEntryDto, PaymentAdjustmentDto, PaymentAdjustmentItemDto } from './dto/ledger.dto';
-import BaseQuery from 'src/query/base.query';
 
 @Injectable()
 export class LedgerService {
@@ -19,17 +17,11 @@ export class LedgerService {
         private readonly ledgerPaymentAdjustmentRepository: Repository<EtsyLedgerEntryPaymentAdjustment>,
         @InjectRepository(EtsyLedgerEntryPaymentAdjustmentItem)
         private readonly ledgerPaymentAdjustmentItemRepository: Repository<EtsyLedgerEntryPaymentAdjustmentItem>,
-        @InjectRepository(Shop)
-        private readonly shopRepository: Repository<Shop>
     ) {}
 
     async getLedgers(shopId: string, query: LedgerQuery): Promise<ListResponse> {
-        const shop = await this.shopRepository.findOne({ where: { etsyShopId: shopId } });
-        if (!shop) {
-            throw new NotFoundException('Shop not found');
-        }
         let queryBuilder = this.ledgerRepository.createQueryBuilder('ledger');
-        queryBuilder = queryBuilder.andWhere('ledger._etsy_shop_name = :shopName', { shopName: shop.etsyShopName });
+        queryBuilder = queryBuilder.andWhere('ledger._etsy_shop_id = :shopId', { shopId: shopId });
         queryBuilder = query.buildQuery(queryBuilder);
 
         const ledgers = await queryBuilder.getMany();
@@ -63,17 +55,17 @@ export class LedgerService {
 
             lsLedgerDtos.push(ledgerDto);
         }
-        const count = await this.countLedgers(query, shop.etsyShopName);
+        const count = await this.countLedgers(query, shopId);
         return {
             count,
             results: lsLedgerDtos
         };
     }
 
-    async countLedgers(queryString: LedgerQuery, shopName: string): Promise<number> {
+    async countLedgers(queryString: LedgerQuery, shopId: string): Promise<number> {
         let queryBuilder = this.ledgerRepository.createQueryBuilder('ledger');
         queryBuilder = queryString.buildCountQuery(queryBuilder);
-        queryBuilder.andWhere('ledger._etsy_shop_name = :shopName', { shopName });
+        queryBuilder.andWhere('ledger._etsy_shop_id = :shopId', { shopId });
         return queryBuilder.getCount();
     }
 

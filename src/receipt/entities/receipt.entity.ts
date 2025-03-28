@@ -2,14 +2,8 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('tbl_etsy_receipt_v3')
 export class EtsyReceipt {
-    @PrimaryColumn({ name: '_app_user_id' })
-    appUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_user_id' })
-    etsyUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_shop_name' })
-    etsyShopName: string;
+    @PrimaryColumn({ name: '_etsy_shop_id', type: 'varchar', length: 45 })
+    etsyShopId: string;
 
     @Column({ name: '_date_crawled', type: 'datetime', nullable: true })
     dateCrawled: Date;

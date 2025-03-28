@@ -35,7 +35,12 @@ export class ListingService {
 
             if (includes.includes('videos')) {
                 const listingVideos = await this.listingVideoRepository.find({ where: { etsyListingId: listingId } });
-                listingDto.videos = listingVideos.map((video) => new VideoDto(video));
+                listingDto.videos = listingVideos.map((video) => new VideoDto(video)).reduce((acc, video, index) => {
+                    return {
+                        ...acc,
+                        [index]: video
+                    }
+                }, {})
             }
 
             if (includes.includes('inventory')) {
@@ -57,7 +62,7 @@ export class ListingService {
     async getListings(query: ListingQuery, shopId?: string): Promise<ListResponse> {
         let builder = this.listingRepository.createQueryBuilder('listing');
         if (shopId) {
-            builder = builder.where('listing.shopId = :shopId', { shopId: shopId });
+            builder = builder.where('listing.etsyShopId = :shopId', { shopId });
         }
         builder = query.buildQuery(builder);
         console.log('query: ', query);
@@ -87,7 +92,14 @@ export class ListingService {
                 listingDto.images = listingImages.filter((image) => image.listingId === listing.listingId).map((image) => new ListingImageDto(image));
             }
             if (listingVideos.length > 0) {
-                listingDto.videos = listingVideos.filter((video) => video.etsyListingId === listing.listingId).map((video) => new VideoDto(video));
+                listingDto.videos = listingVideos.filter((video) => video.etsyListingId === listing.listingId)
+                .map((video) => new VideoDto(video))
+                .reduce((acc, video, index) => {
+                    return {
+                        ...acc,
+                        [index]: video
+                    }
+                }, {})
             }
             if (query.includes.includes('Inventory')) {
                 listingDto.inventory = this.getListingInventory(listing.listingId);
@@ -99,7 +111,7 @@ export class ListingService {
 
         builder = this.listingRepository.createQueryBuilder('listing');
         builder = query.buildCountQuery(builder);
-        builder = builder.where('listing.shopId = :shopId', { shopId: shopId });
+        builder = builder.where('listing.etsyShopId = :shopId', { shopId });
         const count = await builder.getCount();
 
         return {
@@ -144,7 +156,7 @@ export class ListingService {
     async getRandomListingOfShop(query: ListingQuery, shopId?: string): Promise<any> {
         let builder = this.listingRepository.createQueryBuilder('listing');
         if (shopId) {
-            builder = builder.where('listing.shopId = :shopId', { shopId });
+            builder = builder.where('listing.etsyShopId = :shopId', { shopId });
         }
         builder = query.buildQuery(builder);
         console.log('query: ', query);

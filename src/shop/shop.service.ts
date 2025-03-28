@@ -46,7 +46,7 @@ export class ShopService {
     }
 
     async getShopReturnPolicies(etsyShopId: string): Promise<ListResponse> {
-        const refunds = await this.shopRefundRepository.find({ where: { shopId: etsyShopId } });
+        const refunds = await this.shopRefundRepository.find({ where: { etsyShopId: etsyShopId } });
         return {
             results: refunds.map((refund) => new EtsyShopRefundDto(refund)),
             count: refunds.length
@@ -54,11 +54,7 @@ export class ShopService {
     }
 
     async getShopSections(etsyShopId: string): Promise<ListResponse> {
-        const shop = await this.shopRepository.findOne({ where: { etsyShopId } });
-        if (!shop) {
-            throw new NotFoundException(`Shop with ID ${etsyShopId} not found`);
-        }
-        const sections = await this.shopSectionRepository.find({ where: { etsyShopName: shop.etsyShopName } });
+        const sections = await this.shopSectionRepository.find({ where: { etsyShopId: etsyShopId } });
         return {
             results: sections.map((section) => new EtsyShopSectionDto(section)),
             count: sections.length
@@ -66,11 +62,7 @@ export class ShopService {
     }
 
     async getShopProductionPartners(etsyShopId: string): Promise<ListResponse> {
-        const shop = await this.shopRepository.findOne({ where: { etsyShopId } });
-        if (!shop) {
-            throw new NotFoundException(`Shop with ID ${etsyShopId} not found`);
-        }
-        const partners = await this.shopProductionPartnerRepository.find({ where: { etsyShopName: shop.etsyShopName } });
+        const partners = await this.shopProductionPartnerRepository.find({ where: { etsyShopId: etsyShopId } });
         return {
             results: partners.map((partner) => new EtsyProductionPartnerDto(partner)),
             count: partners.length
@@ -78,11 +70,7 @@ export class ShopService {
     }
 
     async getShopShippingProfiles(etsyShopId: string): Promise<ListResponse> {
-        const shop = await this.shopRepository.findOne({ where: { etsyShopId } });
-        if (!shop) {
-            throw new NotFoundException(`Shop with ID ${etsyShopId} not found`);
-        }
-        const profiles = await this.shopShippingProfileRepository.find({ where: { etsyShopName: shop.etsyShopName } });
+        const profiles = await this.shopShippingProfileRepository.find({ where: { etsyShopId: etsyShopId } });
         if (profiles.length === 0) {
             return { results: [], count: 0 };
         }

@@ -32,8 +32,7 @@ export class PaymentDto {
     payment_adjustments: PaymentAdjustmentDto[];
     constructor(data: EtsyPayment) {
         this.payment_id = Number(data.paymentId);
-        this.buyer_user_id = Number(data.etsyUserId);
-        this.shop_id = Number(data.shopId);
+        this.shop_id = Number(data.etsyShopId);
         this.receipt_id = Number(data.receiptId);
         this.amount_gross = new AmountDto(data.amountGrossAmt, data.amountGrossDivisor, data.amountGrossCurrencyCode);
         this.amount_fees = new AmountDto(data.amountFeesAmt, data.amountFeesDivisor, data.amountFeesCurrencyCode);

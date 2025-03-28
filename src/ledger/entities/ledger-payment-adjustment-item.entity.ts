@@ -2,12 +2,6 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('tbl_etsy_ledger_entry_payment_adjustment_item_v3')
 export class EtsyLedgerEntryPaymentAdjustmentItem {
-    @PrimaryColumn({ name: '_app_user_id', type: 'varchar', length: 45 })
-    appUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_user_id', type: 'varchar', length: 45 })
-    etsyUserId: string;
-
     @PrimaryColumn({ name: '_date_crawled', type: 'datetime' })
     dateCrawled: Date;
 
@@ -17,8 +11,8 @@ export class EtsyLedgerEntryPaymentAdjustmentItem {
     @PrimaryColumn({ name: 'payment_adjustment_item_id', type: 'varchar', length: 45 })
     paymentAdjustmentItemId: string;
 
-    @Column({ name: '_etsy_shop_name', type: 'varchar', length: 150, nullable: true })
-    etsyShopName?: string;
+    @PrimaryColumn({ name: '_etsy_shop_id', type: 'varchar', length: 45 })
+    etsyShopId: string;
 
     @Column({ name: 'adjustment_type', type: 'varchar', length: 100, nullable: true })
     adjustmentType?: string;

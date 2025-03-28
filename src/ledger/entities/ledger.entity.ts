@@ -1,16 +1,10 @@
 import { Entity, Column, PrimaryColumn, Index } from 'typeorm';
 
 @Entity('tbl_etsy_ledger_entry_v3')
-@Index('IDX_RPT', ['appUserId', 'etsyShopName', 'createdTimestamp'])
+@Index('IDX_RPT', ['etsyShopId', 'createdTimestamp'])
 export class EtsyLedgerEntry {
-    @PrimaryColumn({ name: '_app_user_id', type: 'varchar', length: 45 })
-    appUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_user_id', type: 'varchar', length: 45 })
-    etsyUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_shop_name', type: 'varchar', length: 150 })
-    etsyShopName: string;
+    @PrimaryColumn({ name: '_etsy_shop_id', type: 'varchar', length: 45 })
+    etsyShopId: string;
 
     @PrimaryColumn({ name: 'entry_id', type: 'varchar', length: 45 })
     entryId: string;

@@ -125,14 +125,13 @@ export class ListingDto {
     taxonomy_id: number;
     images: ListingImageDto[];
     inventory: any | null;
-    videos: VideoDto[];
+    videos: Record<string, VideoDto>;
     skus: string[];
     views: number;
 
     constructor(etsyListing: EtsyListing) {
         this.listing_id = Number(etsyListing.listingId);
-        this.user_id = Number(etsyListing.etsyUserId);
-        this.shop_id = Number(etsyListing.shopId);
+        this.shop_id = Number(etsyListing.etsyShopId);
         this.title = etsyListing.title;
         this.description = etsyListing.description;
         this.state = etsyListing.state;
@@ -188,7 +187,24 @@ export class ListingDto {
         this.taxonomy_id = Number(etsyListing.taxonomyId);
         this.images = [];
         this.inventory = null;
-        this.videos = [];
+        this.videos = {
+            "0": {
+              "video_id": 779352441,
+              "video_url": "https://v.etsystatic.com/video/upload/ac_none,du_15,q_auto:good/USD%7Cen-US%7CUS_36a36d7e8fa63a3024238205e307ac72.mp4",
+              "thumbnail_url": "https://v.etsystatic.com/video/upload/ar_1:1,c_fill,h_105,q_auto,w_105/USD%7Cen-US%7CUS_36a36d7e8fa63a3024238205e307ac72.jpg",
+              "height": 1280,
+              "width": 1280,
+              "video_state": "active"
+            },
+            "2": {
+              "video_id": 753228880,
+              "video_url": "https://v.etsystatic.com/video/upload/ac_none,du_15,q_auto:good/USD%7Cen-US%7CUS_37e1888e0aeb2e630b12f5df2fe6cd11.mp4",
+              "thumbnail_url": "https://v.etsystatic.com/video/upload/ar_1:1,c_fill,h_105,q_auto,w_105/USD%7Cen-US%7CUS_37e1888e0aeb2e630b12f5df2fe6cd11.jpg",
+              "height": 720,
+              "width": 720,
+              "video_state": "inactive"
+            }
+          }
         this.skus = etsyListing.skus ? etsyListing.skus.split(',') : [];
     }
 }

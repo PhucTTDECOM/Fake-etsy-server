@@ -2,14 +2,8 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('tbl_etsy_review_v3')
 export class EtsyReview {
-    @PrimaryColumn({ name: '_app_user_id', type: 'varchar', length: 45 })
-    appUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_user_id', type: 'varchar', length: 45 })
-    etsyUserId: string;
-
-    @PrimaryColumn({ name: '_etsy_shop_name', type: 'varchar', length: 150 })
-    etsyShopName: string;
+    @PrimaryColumn({ name: '_etsy_shop_id', type: 'varchar', length: 45 })
+    etsyShopId: string;
 
     @PrimaryColumn({ name: '_date_crawled', type: 'datetime' })
     dateCrawled: Date;
@@ -22,9 +16,6 @@ export class EtsyReview {
 
     @PrimaryColumn({ name: 'listing_id', type: 'varchar', length: 45 })
     listingId: string;
-
-    @Column({ name: 'shop_id', type: 'varchar', length: 45, nullable: true })
-    shopId?: string;
 
     @Column({ name: 'transaction_id', type: 'varchar', length: 45, nullable: true })
     transactionId?: string;
