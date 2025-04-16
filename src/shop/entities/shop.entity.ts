@@ -50,6 +50,21 @@ export class Shop {
     @Column({ type: 'varchar', length: 45, nullable: true, name: 'review_avg' })
     reviewAvg: string;
 
+    @Column({ name: 'access_token', type: 'varchar', length: 255 })
+    accessToken: string;
+
+    @Column({ name: 'refresh_token', type: 'varchar', length: 255 })
+    refreshToken: string;
+
+    @Column({ name: 'date_issued', type: 'datetime' })
+    dateIssued: Date;
+
+    @Column({ name: 'last_sync', type: 'datetime' })
+    lastSync: Date;
+
+    @Column({ name: 'is_syncing', type: 'boolean' })
+    isSyncing: boolean;
+
     @Column({ type: 'boolean', default: 0, name: '_is_app_deleted' })
     isAppDeleted: number;
 }

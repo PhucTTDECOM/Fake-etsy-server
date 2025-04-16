@@ -25,6 +25,11 @@ import { EtsyShopShippingProfileCost } from './entities/shop-shipping-cost.entit
         ])
     ],
     providers: [ShopService],
-    controllers: [ShopController]
+    controllers: [ShopController],
+    exports: [
+        ShopService,
+        TypeOrmModule
+    ]
 })
 export class ShopModule {}
+

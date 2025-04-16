@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { TokenService } from 'src/common/services/token.service';
+import { ShopService } from 'src/shop/shop.service';
 import { IToken } from 'src/types/token.type';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly tokenService: TokenService) {}
+    constructor(private readonly shopService: ShopService) {}
     public async token(body: any): Promise<IToken> {
         const grantType = body.grant_type;
         let refreshToken = '';
@@ -12,6 +12,6 @@ export class AuthService {
             refreshToken = body.refresh_token;
         }
         console.log(body);
-        return this.tokenService.token(refreshToken);
+        return this.shopService.token(refreshToken);
     }
 }

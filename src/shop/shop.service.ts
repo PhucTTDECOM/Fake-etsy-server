@@ -1,7 +1,7 @@
 import { Shop } from 'src/shop/entities/shop.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import { In, Like, Repository } from 'typeorm';
 import { ShopDto } from './dto/shop.dto';
 import { ListResponse } from 'src/common/api.payload';
 import { EtsyShopRefund } from './entities/shop-refund.entity';
@@ -15,6 +15,7 @@ import { EtsyShopShippingProfileDestination } from './entities/shop-shipping-des
 import { EtsyShopShippingProfileCost } from './entities/shop-shipping-cost.entity';
 import { EtsyShopShippingProfileUpgrade } from './entities/shop-shipping-upgrade.entity';
 import { EtsyShippingProfileDto, ShippingProfileDestinationDto, ShippingProfileUpgradeDto } from './dto/shop-shipping.dto';
+import { IToken } from 'src/types/token.type';
 
 @Injectable()
 export class ShopService {
@@ -36,6 +37,34 @@ export class ShopService {
         @InjectRepository(EtsyShopShippingProfileUpgrade)
         private readonly shopShippingProfileUpgradeRepository: Repository<EtsyShopShippingProfileUpgrade>
     ) {}
+
+    async token(refreshToken: string): Promise<IToken> {
+        if (!refreshToken?.trim()) {
+            refreshToken = '';
+        }
+
+        if (!refreshToken) {
+            return {
+                refresh_token: '768590523.sr4FaG-w3AQM1OuG3MA6_OFX7--nf9BO5LGFs93dUcGFJF30VqqcyCb2DbeB3o9-5VQds76bK4NEdRDU8-h9WlndK7',
+                access_token: '768590523.PXpIyBJiBGKOUZXBEoM7dnNDrvHgJsqQKoaBZu3h5oqMpPrYDC_yCm9f2y-OjjZfpnLzmQGE04n9AOEzZ_E0MLUeT0',
+                expires_in: 3600,
+                token_type: 'Bearer'
+            };
+        }
+        const [tokenBase] = refreshToken.split('.');
+        const token = await this.shopRepository.findOne({
+            where: { accessToken: Like(`%${tokenBase}%`) }
+        });
+        if (!token) {
+            throw new Error('Invalid token');
+        }
+        return {
+            refresh_token: token.refreshToken,
+            access_token: token.accessToken,
+            expires_in: 3600,
+            token_type: 'Bearer'
+        };
+    }
 
     async getShopById(etsyShopId: string): Promise<ShopDto> {
         const shop = await this.shopRepository.findOne({ where: { etsyShopId } });

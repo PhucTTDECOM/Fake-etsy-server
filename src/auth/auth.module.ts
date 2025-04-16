@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { TokenService } from 'src/common/services/token.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ShopToken } from 'src/common/entities/token.entity';
+import { ShopService } from 'src/shop/shop.service';
+import { ShopModule } from 'src/shop/shop.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([ShopToken])],
-    providers: [AuthService, TokenService],
+    imports: [ShopModule],
+    providers: [AuthService, ShopService],
     controllers: [AuthController]
 })
 export class AuthModule {}
