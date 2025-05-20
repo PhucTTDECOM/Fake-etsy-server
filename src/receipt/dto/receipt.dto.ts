@@ -93,7 +93,7 @@ export class ReceiptDto {
 
     private createAmountDto(amount: string, divisor: number, currencyCode: string): AmountDto {
         return {
-            amount: parseFloat(amount) / divisor,
+            amount: parseFloat(amount),
             currency_code: currencyCode,
             divisor
         };
@@ -106,7 +106,7 @@ export class AmountDto {
     currency_code: string;
 
     constructor(amount: string, divisor: number, currencyCode: string) {
-        this.amount = parseFloat(amount) / divisor;
+        this.amount = parseFloat(amount);
         this.divisor = divisor;
         this.currency_code = currencyCode;
     }

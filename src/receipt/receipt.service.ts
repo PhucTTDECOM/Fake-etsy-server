@@ -85,7 +85,7 @@ export class ReceiptService {
         let queryBuilder = this.receiptRepository.createQueryBuilder('receipt');
         let queryString: ReceiptQuery = new ReceiptQuery();
         queryBuilder = queryString.buildQuery(queryBuilder);
-        queryBuilder.andWhere('receipt._etsy_shop_name = :shopName', { shopName: shop.etsyShopName });
+        queryBuilder.andWhere('receipt._etsy_shop_id = :shopId', { shopId: shopId });
         const receipts = await queryBuilder.getMany();
         const receiptIds = receipts.map((receipt) => receipt.receiptId);
         return receiptIds;
